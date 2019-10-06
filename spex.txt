@@ -1,0 +1,183 @@
+Project 3:  This project is a continuation of your project 2 to include step 3 and step 4 of the Huffman coding algorithm steps. That is, project 3 will include step 2, step 3 and step 4. (see the algorithm steps below)
+However, in order to implement steps  3 and 4, the list nodes in project 2 will be modified to become tree nodes.
+(You will write only C++ for this project. )
+  
+Step 1: Compute probabilities of a given text file.  (Done in project 1.)
+Step 2: Construct Huffman ordered linked list using insertion sort. 
+Step 3: Construct Huffman binary tree 
+    After the tree construction, you are to traverse the Huffman binary tree in the order of:
+            a) pre-order 
+            b) in-order
+            c) post-order
+    
+    Step 4: get Huffman code, from the binary tree .
+    
+Note:  Huffman encoding and decoding will be our project 4.
+
+********************************
+Language: C++ 
+********************************
+Due Date:  C++  Soft copy: 9/19/2017 Wednesday before midnight
+          C++  Hard copy: 9/20/2017 Thursday in class
+
+********************************
+I. Input (argv[1]  C++):  A file contains a list of <char prob> pairs with the  following format. The input prob are integer, has been multiplied by 100, i.e., a prob equal to .40 will be given as 40, char should be treated as string. 
+********************************
+    char1  prob1  
+    char2  prob2
+    char3  prob3
+:
+:
+charn  probn  
+
+********************************
+II. Outputs:  Five output files as below.
+********************************
+- outFile1 (argv[2]): A text file contain the Huffman <char    code> pairs // see below for detail
+- outFile2 (argv[3]): A text file contain the pre-order traversal of the Huffman binary tree
+- outFile3 (argv[4]): A text file contain the in-order traversal of the Huffman binary tree
+- outFile4 (argv[5]): A text file contain the post-order traversal of the Huffman binary tree
+- outFile5 (argv[6]): for your debugging outputs. See output format below for detail.
+
+
+
+
+
+********************************
+III. Data structure: You MUST have all the object classes as given below.
+********************************
+   
+  - A treeNode class  // required
+   
+- chStr (string)
+- prob (int)
+- next (treeNode *)
+- left (treeNode *)
+- right (treeNode *)
+- code (string) 
+
+-  linkedList class
+- listHead (treeNode *)
+- constructor (..)
+- findSpot (…)  // Use the findSpot algorithm steps taught in class.
+- insertOneNode (spot,  newNode)  
+// inserting newNode between spot and spot.next.
+                // only need two statements.
+
+- printList (…)
+// print the list to outFIle5, from listHead to the end of the list in the following format:
+
+listHead -->(“dummy”, 0, next’s chStr1)-->( chStr1, prob1, next’s chStr2)...... --> (chStrj, probj, NULL)--> NULL
+
+    For example: 
+listHead -->(“dummy”, 0, “b”)-->( “b”, 5, “a”) -->( “a”, 7, “d”)............ --> (“x”, 45, NULL)--> NULL
+
+- A HuffmanBinaryTree class    // required
+
+    - Root (treeNode *)
+
+        -  Method:
+- constructor(s)
+- constructHuffmanLList (inFile, outFile)
+- constructHuffmanBinTree (listhead)  
+        - preOrderTraveral (Root, outFile)
+        - inOrderTraversal (Root, outFile)
+        - postOrderTraveral (Root, outFile)
+        - getCode (T, code)
+        - isLeaf (node)// a given node is a leaf if both left and right are null.
+
+
+******************************************
+IV.  Main (….)
+******************************************
+Step 0: inFile 🡨 open input  file from argv[1]
+outFile1, outFile2, …, outFile5 🡨 open from argv[2], …, argv[6]
+
+Step 1: constructHuffmanLList  (inFile, outFile5) // see below
+Step 2:  constructHuffmanBinTree (listHead, outFile5) // see below
+Step 3: preOrderTraveral (Root, outFile2)  // In recursion
+ inOrderTraversal (Root, outFile3) // In recursion
+postOrderTraveral (Root, outFile4)// In recursion
+
+Step 4:  getCode (Root, ‘’, outFile1) // ‘’ is an empty string
+
+******************************************
+V.  constructHuffmanLList (inFile, outFile)
+******************************************
+
+Step 1:  listHead 🡨 get a newNode as the dummy listNode with (“dummy” ,0),  listHead to point to.  
+
+Step 3: chr  🡨 get  from inFile
+            Prob  🡨 get  from inFile
+    newNode 🡨 get a new listNode
+            newNode.chStr 🡨 chr
+    newNode.prob 🡨 Prob
+    newNode.next 🡨 null
+
+Step 4: spot 🡨 findSpot (listHead, newNode) // use algorithm steps given in class
+            insertOneNode(spot, newNode)
+
+Step 5: printList (listHead, outFile) 
+// print the list to outFile, from listHead to the end of the list 
+// using the format given in the above.
+
+Step 6: repeat step 3 – step 5 until the end of inFile .
+    
+Step 7: close inFile
+        
+******************************************
+VI. constructHuffmanBinTree (listHead, outFile) 
+******************************************
+ Step 1: newNode 🡨 create a treeNode
+        newNode’s prob 🡨 the sum of prob of the first and second node of the list // first is the node after dummy
+        newNode’s chStr 🡨 concatenate chStr of the first node and chStr of the second node in the list
+        newNode’s left 🡨 the first node of the list
+        newNode’s right 🡨 the second node of the list
+
+Step 2: spot 🡨 findSpot(listHead, newNode)  
+
+          insertOneNode (spot, newNode)  // inserting newNode between spot and spot.next.
+                // only need two statements.
+         listHead.next 🡨 listHead .next.next.next  //  
+
+    printList (listHead, outFile) 
+
+Step 3: repeat step 1 – step 2 until the list only has one node left which is the newNode
+
+Step 4:  Root 🡨 newNode
+
+******************************************
+VII.  getCode (T, code, outFile) 
+******************************************
+if  isLeaf (T)
+        
+     T.code =  code;
+     output   T. chStr  and T.code to outfile   // new line after 
+    else 
+          constructCharCode (T->left, code + “0”) //string concatenation
+          constructCharCode (T->right, code + “1”) //string concatenation
+
+******************************************
+VIII.  preOrderTraveral (T, outFile)  // In recursion
+******************************************
+  
+if (T is null)
+     do nothing
+else
+      printNode (T) // output to outFile,  see printing format in listBinTreeNode in above
+      preOrderTraveral (T.left, outFile)
+                  preOrderTraveral (T.right, outFile)
+
+******************************************
+VIIII. inOrderTraveral (Root, outFile)  // In recursion
+******************************************
+
+You should know how to write this method.
+
+
+******************************************
+X. postOrderTraveral (Root, outFile)  // In recursion
+******************************************
+
+You should know how to write this method.
+

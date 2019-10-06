@@ -1,0 +1,27 @@
+a 40 ihcgdkvlsjtoe
+i 10 hcgdk
+h 1 cg
+c 1 g
+g 1 h
+cg 2 vl c g
+hcg 3 d h cg
+d 3 vls
+hcgd 6 k hcg d
+k 6 vlsj
+hcgdk 12 vlsjto hcgd k
+ihcgdk 22 vlsjtoe i hcgdk
+v 1 l
+l 1 c
+vl 2 s v l
+s 2 hcg
+vls 4 j vl s
+j 4 t
+vlsj 8 to vls j
+t 5 o
+o 5 hcgd
+to 10 i t o
+vlsjto 18 e vlsj to
+e 20 ihcgdk
+vlsjtoe 38 a vlsjto e
+ihcgdkvlsjtoe 60 aihcgdkvlsjtoe ihcgdk vlsjtoe
+aihcgdkvlsjtoe 100 a ihcgdkvlsjtoe
